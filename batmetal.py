@@ -2,6 +2,7 @@
 import os, pygame
 from pygame.locals import *
 from pygame.compat import geterror
+import random
 
 if not pygame.font: print ('Warning, fonts disabled')
 if not pygame.mixer: print ('Warning, sound disabled')
@@ -62,6 +63,31 @@ class Shoot(pygame.sprite.Sprite):
         newpos = self.rect.move((self.move, 0))
         self.rect = newpos
 
+class Can(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image, self.rect = load_image('can.png', -1)
+        screen = pygame.display.get_surface()
+        self.area = screen.get_rect()
+        # Maybe do not use magic numbers
+        self.rect.topleft = 850, self.generate_random_y_position()
+        self.move = 10
+        self.dizzy = 0
+
+    def update(self):
+        self._move()
+
+    def off_the_screen(self):
+        return self.rect.x <= 0
+
+    def _move(self):
+        newpos = self.rect.move((-self.move, 0))
+        self.rect = newpos
+
+    def generate_random_y_position(self):
+        return random.randint(3, 10) * 5 * 10
+
+
 class Misile(pygame.sprite.Sprite):
     def __init__(self, y):
         pygame.sprite.Sprite.__init__(self)
@@ -90,6 +116,12 @@ def draw_background(x, bridge, screen):
 def draw_cannon_fire(fire, screen, y):
     # Maybe do not use magic numbers
     screen.blit(fire, (340, y + 30))
+    
+def check_cans_position(cans):
+    for can in cans:
+        if can.off_the_screen():
+            cans.remove(can)
+    return cans
 
 def main():
     pygame.init()
@@ -107,15 +139,16 @@ def main():
 
     bridge = pygame.image.load("bridge.png").convert()
     cannon_fire = pygame.image.load("cannon_fire.png").convert_alpha()
-    
+
     shoots = []
     misils = []
+    cans = []
 
     going = True
     while going:
         clock.tick(60)
         must_draw_cannon_fire = False
-        
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 going = False
@@ -130,6 +163,7 @@ def main():
                 all_sprites_tuple.append(misil)
                 misils.append(misil)
 
+
         k = pygame.key.get_pressed()
 
         if k[K_DOWN]:
@@ -138,7 +172,17 @@ def main():
             batmovile.move_up()
         if k[K_SPACE]:
             must_draw_cannon_fire = True
-            
+
+        # 1/20 chances to generate a can and only two cans on the screen
+        # this method is actually prety bad
+        random_number = random.randint(1, 20)
+        if len(cans) <= 1 and int(random_number) == 1:
+            can = Can()
+            all_sprites_tuple.append(can)
+            cans.append(can)
+
+        # if one of the cans is off the screen I remove it from the list
+        cans = check_cans_position(cans)
 
         allsprites = pygame.sprite.RenderPlain(all_sprites_tuple)
 
@@ -149,7 +193,8 @@ def main():
 
         if must_draw_cannon_fire:
             draw_cannon_fire(cannon_fire, screen, batmovile.rect.y)
-        
+
+
         pygame.display.flip()
 
         background_x -= 5
