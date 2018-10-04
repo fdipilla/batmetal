@@ -77,9 +77,6 @@ class Can(pygame.sprite.Sprite):
     def update(self):
         self._move()
 
-    def off_the_screen(self):
-        return self.rect.x <= 0
-
     def _move(self):
         newpos = self.rect.move((-self.move, 0))
         self.rect = newpos
@@ -116,12 +113,16 @@ def draw_background(x, bridge, screen):
 def draw_cannon_fire(fire, screen, y):
     # Maybe do not use magic numbers
     screen.blit(fire, (340, y + 30))
-    
-def check_cans_position(cans):
-    for can in cans:
-        if can.off_the_screen():
-            cans.remove(can)
-    return cans
+
+# Check if the given array of sprites is off the screen
+# and removeit from the array
+def check_all_sprites_off_screen(sprites_groups):
+    for sprites_group in sprites_groups:
+        if not isinstance(sprites_group, Player):
+            for sprite in sprites_group:
+                if sprite.rect.x <= 0 or sprite.rect.x >= 900:
+                    sprites_group.remove(sprite)
+    return sprites_groups
 
 def main():
     pygame.init()
@@ -133,8 +134,6 @@ def main():
 
     batmovile = Player()
 
-    all_sprites_tuple = [batmovile]
-    allsprites = pygame.sprite.RenderPlain(all_sprites_tuple)
     background_x = 0
 
     bridge = pygame.image.load("bridge.png").convert()
@@ -143,6 +142,7 @@ def main():
     shoots = []
     misils = []
     cans = []
+    all_sprites_tuple = []
 
     going = True
     while going:
@@ -156,11 +156,9 @@ def main():
                 going = False
             if event.type == KEYDOWN and event.key == K_SPACE:
                 shoot = Shoot(batmovile.rect.y)
-                all_sprites_tuple.append(shoot)
                 shoots.append(shoot)
             if event.type == KEYDOWN and event.key == K_a:
                 misil = Misile(batmovile.rect.y)
-                all_sprites_tuple.append(misil)
                 misils.append(misil)
 
 
@@ -178,11 +176,21 @@ def main():
         random_number = random.randint(1, 20)
         if len(cans) <= 1 and int(random_number) == 1:
             can = Can()
-            all_sprites_tuple.append(can)
             cans.append(can)
 
         # if one of the cans is off the screen I remove it from the list
-        cans = check_cans_position(cans)
+        #cans = check_sprites_off_screen(cans)
+        #shoots = check_sprites_off_screen(shoots)
+        #misils = check_sprites_off_screen(misils)
+
+
+        all_sprites_tuple.append(batmovile)
+        all_sprites_tuple.append(cans)
+        all_sprites_tuple.append(misils)
+        all_sprites_tuple.append(shoots)
+
+
+        all_sprites_tuple = check_all_sprites_off_screen(all_sprites_tuple);
 
         allsprites = pygame.sprite.RenderPlain(all_sprites_tuple)
 
