@@ -58,6 +58,9 @@ class Shoot(pygame.sprite.Sprite):
 
     def update(self):
         self._move()
+        screen = pygame.display.get_surface()
+        if not screen.get_rect().contains(self.rect):
+            self.kill()
 
     def _move(self):
         newpos = self.rect.move((self.move, 0))
@@ -70,12 +73,15 @@ class Can(pygame.sprite.Sprite):
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         # Maybe do not use magic numbers
-        self.rect.topleft = 850, self.generate_random_y_position()
+        self.rect.topleft = 800, self.generate_random_y_position()
         self.move = 10
         self.dizzy = 0
 
     def update(self):
         self._move()
+        screen = pygame.display.get_surface()
+        #if not screen.get_rect().contains(self.rect):
+            #self.kill()
 
     def _move(self):
         newpos = self.rect.move((-self.move, 0))
@@ -98,6 +104,9 @@ class Misile(pygame.sprite.Sprite):
 
     def update(self):
         self._move()
+        screen = pygame.display.get_surface()
+        if not screen.get_rect().contains(self.rect):
+            self.kill()
 
     def _move(self):
         newpos = self.rect.move((self.move, 0))
@@ -139,9 +148,10 @@ def main():
     bridge = pygame.image.load("bridge.png").convert()
     cannon_fire = pygame.image.load("cannon_fire.png").convert_alpha()
 
-    shoots = []
-    misils = []
-    cans = []
+    shoots = pygame.sprite.Group()
+    misils = pygame.sprite.Group()
+    cans = pygame.sprite.Group()
+
     all_sprites_tuple = []
 
     going = True
@@ -156,10 +166,10 @@ def main():
                 going = False
             if event.type == KEYDOWN and event.key == K_SPACE:
                 shoot = Shoot(batmovile.rect.y)
-                shoots.append(shoot)
+                shoots.add(shoot)
             if event.type == KEYDOWN and event.key == K_a:
                 misil = Misile(batmovile.rect.y)
-                misils.append(misil)
+                misils.add(misil)
 
 
         k = pygame.key.get_pressed()
@@ -176,12 +186,7 @@ def main():
         random_number = random.randint(1, 20)
         if len(cans) <= 1 and int(random_number) == 1:
             can = Can()
-            cans.append(can)
-
-        # if one of the cans is off the screen I remove it from the list
-        #cans = check_sprites_off_screen(cans)
-        #shoots = check_sprites_off_screen(shoots)
-        #misils = check_sprites_off_screen(misils)
+            cans.add(can)
 
 
         all_sprites_tuple.append(batmovile)
@@ -190,7 +195,7 @@ def main():
         all_sprites_tuple.append(shoots)
 
 
-        all_sprites_tuple = check_all_sprites_off_screen(all_sprites_tuple);
+        all_sprites_tuple = check_all_sprites_off_screen(all_sprites_tuple)
 
         allsprites = pygame.sprite.RenderPlain(all_sprites_tuple)
 
@@ -206,6 +211,10 @@ def main():
         pygame.display.flip()
 
         background_x -= 5
+        blocks_hit_list = pygame.sprite.spritecollide(batmovile, cans, True)
+        blocks_hit_list = pygame.sprite.groupcollide(shoots, cans, True, True)
+        blocks_hit_list = pygame.sprite.groupcollide(misils, cans, True, True)
+
 
     pygame.quit()
 
