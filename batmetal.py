@@ -15,7 +15,7 @@ img_dir = os.path.join(main_dir, '')
 def load_image(name, colorkey=None):
     fullname = os.path.join(img_dir, name)
     try:
-        image = pygame.image.load(fullname)
+        image = pygame.image.load(fullname).convert()
     except pygame.error:
         print ('Cannot load image:', fullname)
         raise SystemExit(str(geterror()))
@@ -46,9 +46,10 @@ class Player(pygame.sprite.Sprite):
 
 
 class Shoot(pygame.sprite.Sprite):
-    def __init__(self, y):
+    def __init__(self, y, sprite):
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = load_image('shoot.png', -1)
+        self.image = sprite
+        self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         # Maybe do not use magic numbers
@@ -67,9 +68,10 @@ class Shoot(pygame.sprite.Sprite):
         self.rect = newpos
 
 class Can(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, sprite):
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = load_image('can.png', -1)
+        self.image = sprite
+        self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         # Maybe do not use magic numbers
@@ -92,9 +94,10 @@ class Can(pygame.sprite.Sprite):
 
 
 class Misile(pygame.sprite.Sprite):
-    def __init__(self, y):
+    def __init__(self, y, sprite):
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = load_image('misil.png', -1)
+        self.image = sprite
+        self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         # Maybe do not use magic numbers
@@ -153,28 +156,32 @@ def main():
     bridge = pygame.image.load("bridge.png").convert()
     bottom_bar = pygame.image.load("bottom_bar.png").convert()
     cannon_fire = pygame.image.load("cannon_fire.png").convert_alpha()
-
+    shoot_sprite = pygame.image.load("shoot.png").convert_alpha()
+    misile_sprite = pygame.image.load("misil.png").convert_alpha()
+    can_sprite = pygame.image.load("can.png").convert_alpha()
+    
     shoots = pygame.sprite.Group()
     misils = pygame.sprite.Group()
     cans = pygame.sprite.Group()
 
-    all_sprites_tuple = []
+    #all_sprites_tuple = []
 
     going = True
     while going:
+        all_sprites_tuple = []
         clock.tick(60)
         must_draw_cannon_fire = False
 
         for event in pygame.event.get():
             if event.type == QUIT:
                 going = False
-            if event.type == KEYDOWN and event.key == K_ESCAPE:
+            elif event.type == KEYDOWN and event.key == K_ESCAPE:
                 going = False
-            if event.type == KEYDOWN and event.key == K_SPACE:
-                shoot = Shoot(batmovile.rect.y)
+            elif event.type == KEYDOWN and event.key == K_SPACE:
+                shoot = Shoot(batmovile.rect.y, shoot_sprite)
                 shoots.add(shoot)
-            if event.type == KEYDOWN and event.key == K_a:
-                misil = Misile(batmovile.rect.y)
+            elif event.type == KEYDOWN and event.key == K_a:
+                misil = Misile(batmovile.rect.y, misile_sprite)
                 misils.add(misil)
 
 
@@ -182,7 +189,7 @@ def main():
 
         if k[K_DOWN]:
             batmovile.move_down()
-        if k[K_UP]:
+        elif k[K_UP]:
             batmovile.move_up()
         if k[K_SPACE]:
             must_draw_cannon_fire = True
@@ -191,7 +198,7 @@ def main():
         # this method is actually prety bad
         random_number = random.randint(1, 20)
         if len(cans) <= 1 and int(random_number) == 1:
-            can = Can()
+            can = Can(can_sprite)
             cans.add(can)
 
 
@@ -206,7 +213,7 @@ def main():
         allsprites = pygame.sprite.RenderPlain(all_sprites_tuple)
 
         draw_background(background_x, bridge, screen)
-        draw_bottom_bar(screen, bottom_bar)
+
         allsprites.update()
 
         allsprites.draw(screen)
@@ -214,7 +221,8 @@ def main():
         if must_draw_cannon_fire:
             draw_cannon_fire(cannon_fire, screen, batmovile.rect.y)
 
-
+        draw_bottom_bar(screen, bottom_bar)
+        
         pygame.display.flip()
 
         background_x -= 5
