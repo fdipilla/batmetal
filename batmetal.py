@@ -119,6 +119,11 @@ def draw_background(x, bridge, screen):
     if rel_x < w:
         screen.blit(bridge, (rel_x, 0))
 
+def draw_bottom_bar(screen, bar):
+    w, h = pygame.display.get_surface().get_size()
+    bar_w, bar_h = bar.get_size()
+    screen.blit(bar, (w - bar_w, h - bar_h))
+
 def draw_cannon_fire(fire, screen, y):
     # Maybe do not use magic numbers
     screen.blit(fire, (340, y + 30))
@@ -146,6 +151,7 @@ def main():
     background_x = 0
 
     bridge = pygame.image.load("bridge.png").convert()
+    bottom_bar = pygame.image.load("bottom_bar.png").convert()
     cannon_fire = pygame.image.load("cannon_fire.png").convert_alpha()
 
     shoots = pygame.sprite.Group()
@@ -200,6 +206,7 @@ def main():
         allsprites = pygame.sprite.RenderPlain(all_sprites_tuple)
 
         draw_background(background_x, bridge, screen)
+        draw_bottom_bar(screen, bottom_bar)
         allsprites.update()
 
         allsprites.draw(screen)
