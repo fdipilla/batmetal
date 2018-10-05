@@ -152,8 +152,10 @@ def main():
     batmovile = Player()
 
     background_x = 0
+    sky_x = 0
 
-    bridge = pygame.image.load("bridge.png").convert()
+    bridge = pygame.image.load("bridge.png").convert_alpha()
+    sky = pygame.image.load("sky.png").convert()
     bottom_bar = pygame.image.load("bottom_bar.png").convert()
     cannon_fire = pygame.image.load("cannon_fire.png").convert_alpha()
     shoot_sprite = pygame.image.load("shoot.png").convert_alpha()
@@ -212,6 +214,7 @@ def main():
 
         allsprites = pygame.sprite.RenderPlain(all_sprites_tuple)
 
+        draw_background(sky_x, sky, screen)
         draw_background(background_x, bridge, screen)
 
         allsprites.update()
@@ -226,6 +229,7 @@ def main():
         pygame.display.flip()
 
         background_x -= 5
+        sky_x -= 1
         blocks_hit_list = pygame.sprite.spritecollide(batmovile, cans, True)
         blocks_hit_list = pygame.sprite.groupcollide(shoots, cans, True, True)
         blocks_hit_list = pygame.sprite.groupcollide(misils, cans, True, True)
