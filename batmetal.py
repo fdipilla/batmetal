@@ -30,6 +30,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image, self.rect = load_image('batmovile.png', -1)
+        self.rect.y = 200
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         self.move = 9
@@ -39,10 +40,12 @@ class Player(pygame.sprite.Sprite):
         return True
 
     def move_down(self):
-        self.rect = self.rect.move((0,self.move))
+        if self.rect.y <= 360:
+            self.rect = self.rect.move((0,self.move))
 
     def move_up(self):
-        self.rect = self.rect.move((0,-self.move))
+        if self.rect.y >= 135:
+            self.rect = self.rect.move((0,-self.move))
 
 
 class Shoot(pygame.sprite.Sprite):
