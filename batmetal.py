@@ -84,9 +84,6 @@ class Can(pygame.sprite.Sprite):
 
     def update(self):
         self._move()
-        screen = pygame.display.get_surface()
-        #if not screen.get_rect().contains(self.rect):
-            #self.kill()
 
     def _move(self):
         newpos = self.rect.move((-self.move, 0))
@@ -140,7 +137,7 @@ def check_all_sprites_off_screen(sprites_groups):
     for sprites_group in sprites_groups:
         if not isinstance(sprites_group, Player):
             for sprite in sprites_group:
-                if sprite.rect.x <= 0 or sprite.rect.x >= 900:
+                if sprite.rect.x <= -100 or sprite.rect.x >= 900:
                     sprites_group.remove(sprite)
     return sprites_groups
 
