@@ -35,6 +35,7 @@ class Player(pygame.sprite.Sprite):
         self.area = screen.get_rect()
         self.move = 9
         self.dizzy = 0
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         return True
@@ -59,6 +60,7 @@ class Shoot(pygame.sprite.Sprite):
         self.rect.topleft = 300, y + 40
         self.move = 15
         self.dizzy = 0
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         self._move()
@@ -81,6 +83,7 @@ class Can(pygame.sprite.Sprite):
         self.rect.topleft = 800, self.generate_random_y_position()
         self.move = 10
         self.dizzy = 0
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         self._move()
@@ -104,6 +107,7 @@ class Misile(pygame.sprite.Sprite):
         self.rect.topleft = 300, y + 40
         self.move = 15
         self.dizzy = 0
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         self._move()
@@ -161,7 +165,7 @@ def main():
     shoot_sprite = pygame.image.load("shoot.png").convert_alpha()
     misile_sprite = pygame.image.load("misil.png").convert_alpha()
     can_sprite = pygame.image.load("can.png").convert_alpha()
-    
+
     shoots = pygame.sprite.Group()
     misils = pygame.sprite.Group()
     cans = pygame.sprite.Group()
@@ -225,14 +229,14 @@ def main():
             draw_cannon_fire(cannon_fire, screen, batmovile.rect.y)
 
         draw_bottom_bar(screen, bottom_bar)
-        
+
         pygame.display.flip()
 
         background_x -= 5
         sky_x -= 1
-        blocks_hit_list = pygame.sprite.spritecollide(batmovile, cans, True)
-        blocks_hit_list = pygame.sprite.groupcollide(shoots, cans, True, True)
-        blocks_hit_list = pygame.sprite.groupcollide(misils, cans, True, True)
+        blocks_hit_list = pygame.sprite.spritecollide(batmovile, cans, True, pygame.sprite.collide_mask)
+        blocks_hit_list = pygame.sprite.groupcollide(shoots, cans, True, True, pygame.sprite.collide_mask)
+        blocks_hit_list = pygame.sprite.groupcollide(misils, cans, True, True, pygame.sprite.collide_mask)
 
 
     pygame.quit()
