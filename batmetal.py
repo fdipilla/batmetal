@@ -36,6 +36,7 @@ class Player(pygame.sprite.Sprite):
         self.move = 9
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
+        self.lives = 2
 
     def update(self):
         return True
@@ -131,6 +132,11 @@ def draw_bottom_bar(screen, bar):
     bar_w, bar_h = bar.get_size()
     screen.blit(bar, (w - bar_w, h - bar_h))
 
+def draw_bathead(screen, bathead):
+    w, h = pygame.display.get_surface().get_size()
+    sprite_w, sprite_h = bathead.get_size()
+    screen.blit(bathead, (w - 410, h - sprite_h - 10))
+
 def draw_cannon_fire(fire, screen, y):
     # Maybe do not use magic numbers
     screen.blit(fire, (340, y + 30))
@@ -165,6 +171,12 @@ def main():
     shoot_sprite = pygame.image.load("shoot.png").convert_alpha()
     misile_sprite = pygame.image.load("misil.png").convert_alpha()
     can_sprite = pygame.image.load("can.png").convert_alpha()
+
+    bathead_1 = pygame.image.load("bathead_1.png").convert_alpha()
+    bathead_2 = pygame.image.load("bathead_2.png").convert_alpha()
+    bathead_3 = pygame.image.load("bathead_3.png").convert_alpha()
+
+    lives = [bathead_3, bathead_2, bathead_1]
 
     shoots = pygame.sprite.Group()
     misils = pygame.sprite.Group()
@@ -229,12 +241,18 @@ def main():
             draw_cannon_fire(cannon_fire, screen, batmovile.rect.y)
 
         draw_bottom_bar(screen, bottom_bar)
+        draw_bathead(screen, lives[batmovile.lives])
 
         pygame.display.flip()
 
         background_x -= 5
         sky_x -= 1
+
         blocks_hit_list = pygame.sprite.spritecollide(batmovile, cans, True, pygame.sprite.collide_mask)
+
+        if len(blocks_hit_list):
+            batmovile.lives -= 1
+
         blocks_hit_list = pygame.sprite.groupcollide(shoots, cans, True, True, pygame.sprite.collide_mask)
         blocks_hit_list = pygame.sprite.groupcollide(misils, cans, True, True, pygame.sprite.collide_mask)
 
