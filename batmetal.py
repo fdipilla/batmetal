@@ -243,6 +243,7 @@ def main():
         draw_bottom_bar(screen, bottom_bar)
         draw_bathead(screen, lives[batmovile.lives])
 
+
         pygame.display.flip()
 
         background_x -= 5
@@ -252,6 +253,9 @@ def main():
 
         if len(blocks_hit_list):
             batmovile.lives -= 1
+            if batmovile.lives < 0:
+                batmovile.lives = 2
+
 
         blocks_hit_list = pygame.sprite.groupcollide(shoots, cans, True, True, pygame.sprite.collide_mask)
         blocks_hit_list = pygame.sprite.groupcollide(misils, cans, True, True, pygame.sprite.collide_mask)
