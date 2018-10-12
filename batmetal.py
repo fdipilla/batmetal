@@ -37,6 +37,7 @@ class Player(pygame.sprite.Sprite):
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.lives = 2
+        self.fuel = 300
 
     def update(self):
         return True
@@ -137,6 +138,24 @@ def draw_bathead(screen, bathead):
     sprite_w, sprite_h = bathead.get_size()
     screen.blit(bathead, (w - 410, h - sprite_h - 10))
 
+def draw_fuel(screen, sprites, fuel):
+    w, h = pygame.display.get_surface().get_size()
+
+    if fuel >= 250:
+        sprite = sprites[0]
+    elif fuel >= 200:
+        sprite = sprites[1]
+    elif fuel >= 100:
+        sprite = sprites[2]
+    elif fuel >= 50:
+        sprite = sprites[3]
+    else:
+        sprite = sprites[4]
+
+    sprite_w, sprite_h = sprite.get_size()
+    screen.blit(sprite, (w - 505, h - sprite_h - 20))
+
+
 def draw_cannon_fire(fire, screen, y):
     # Maybe do not use magic numbers
     screen.blit(fire, (340, y + 30))
@@ -176,7 +195,14 @@ def main():
     bathead_2 = pygame.image.load("bathead_2.png").convert_alpha()
     bathead_3 = pygame.image.load("bathead_3.png").convert_alpha()
 
+    fuel_1 = pygame.image.load("fuel_1.png").convert_alpha()
+    fuel_2 = pygame.image.load("fuel_2.png").convert_alpha()
+    fuel_3 = pygame.image.load("fuel_3.png").convert_alpha()
+    fuel_4 = pygame.image.load("fuel_4.png").convert_alpha()
+    fuel_5 = pygame.image.load("fuel_5.png").convert_alpha()
+
     lives = [bathead_3, bathead_2, bathead_1]
+    fuel_sprites = [fuel_1, fuel_2, fuel_3, fuel_4, fuel_5]
 
     shoots = pygame.sprite.Group()
     misils = pygame.sprite.Group()
@@ -242,12 +268,13 @@ def main():
 
         draw_bottom_bar(screen, bottom_bar)
         draw_bathead(screen, lives[batmovile.lives])
-
+        draw_fuel(screen, fuel_sprites, batmovile.fuel)
 
         pygame.display.flip()
 
         background_x -= 5
         sky_x -= 1
+        batmovile.fuel -= 1
 
         blocks_hit_list = pygame.sprite.spritecollide(batmovile, cans, True, pygame.sprite.collide_mask)
 
