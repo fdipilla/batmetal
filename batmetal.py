@@ -37,7 +37,7 @@ class Player(pygame.sprite.Sprite):
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.lives = 2
-        self.fuel = 300
+        self.fuel = 3000
 
     def update(self):
         return True
@@ -141,13 +141,13 @@ def draw_bathead(screen, bathead):
 def draw_fuel(screen, sprites, fuel):
     w, h = pygame.display.get_surface().get_size()
 
-    if fuel >= 250:
+    if fuel >= 2500:
         sprite = sprites[0]
-    elif fuel >= 200:
+    elif fuel >= 2000:
         sprite = sprites[1]
-    elif fuel >= 100:
+    elif fuel >= 1500:
         sprite = sprites[2]
-    elif fuel >= 50:
+    elif fuel >= 1000:
         sprite = sprites[3]
     else:
         sprite = sprites[4]
