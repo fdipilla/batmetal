@@ -36,7 +36,7 @@ class Player(pygame.sprite.Sprite):
         self.move = 9
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
-        self.lives = 2
+        self.lives = 3
         self.fuel = 3000
 
     def update(self):
@@ -194,6 +194,7 @@ def main():
     bathead_1 = pygame.image.load("bathead_1.png").convert_alpha()
     bathead_2 = pygame.image.load("bathead_2.png").convert_alpha()
     bathead_3 = pygame.image.load("bathead_3.png").convert_alpha()
+    bathead_4 = pygame.image.load("bathead_4.png").convert_alpha()
 
     fuel_1 = pygame.image.load("fuel_1.png").convert_alpha()
     fuel_2 = pygame.image.load("fuel_2.png").convert_alpha()
@@ -201,7 +202,7 @@ def main():
     fuel_4 = pygame.image.load("fuel_4.png").convert_alpha()
     fuel_5 = pygame.image.load("fuel_5.png").convert_alpha()
 
-    lives = [bathead_3, bathead_2, bathead_1]
+    lives = [bathead_4, bathead_3, bathead_2, bathead_1]
     fuel_sprites = [fuel_1, fuel_2, fuel_3, fuel_4, fuel_5]
 
     shoots = pygame.sprite.Group()
