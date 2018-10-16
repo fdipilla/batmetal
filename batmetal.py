@@ -97,6 +97,29 @@ class Can(pygame.sprite.Sprite):
     def generate_random_y_position(self):
         return random.randint(3, 10) * 5 * 10
 
+class FuelCan(pygame.sprite.Sprite):
+    def __init__(self, sprite):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = sprite
+        self.rect = sprite.get_rect()
+        screen = pygame.display.get_surface()
+        self.area = screen.get_rect()
+        # Maybe do not use magic numbers
+        self.rect.topleft = 800, self.generate_random_y_position()
+        self.move = 10
+        self.dizzy = 0
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def update(self):
+        self._move()
+
+    def _move(self):
+        newpos = self.rect.move((-self.move, 0))
+        self.rect = newpos
+
+    def generate_random_y_position(self):
+        return random.randint(3, 10) * 5 * 10
+
 
 class Misile(pygame.sprite.Sprite):
     def __init__(self, y, sprite):
@@ -190,6 +213,7 @@ def main():
     shoot_sprite = pygame.image.load("shoot.png").convert_alpha()
     misile_sprite = pygame.image.load("misil.png").convert_alpha()
     can_sprite = pygame.image.load("can.png").convert_alpha()
+    fuel_can_sprite = pygame.image.load("fuel_can.png").convert_alpha()
 
     bathead_1 = pygame.image.load("bathead_1.png").convert_alpha()
     bathead_2 = pygame.image.load("bathead_2.png").convert_alpha()
@@ -208,6 +232,7 @@ def main():
     shoots = pygame.sprite.Group()
     misils = pygame.sprite.Group()
     cans = pygame.sprite.Group()
+    fuel_cans = pygame.sprite.Group()
 
     #all_sprites_tuple = []
 
@@ -246,9 +271,15 @@ def main():
             can = Can(can_sprite)
             cans.add(can)
 
+        random_number = random.randint(1, 20)
+        if len(cans) <= 1 and int(random_number) == 1:
+            fuel_can = FuelCan(fuel_can_sprite)
+            fuel_cans.add(fuel_can)
+
 
         all_sprites_tuple.append(batmovile)
         all_sprites_tuple.append(cans)
+        all_sprites_tuple.append(fuel_cans)
         all_sprites_tuple.append(misils)
         all_sprites_tuple.append(shoots)
 
