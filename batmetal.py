@@ -318,6 +318,7 @@ def main():
 
         blocks_hit_list = pygame.sprite.groupcollide(shoots, cans, True, True, pygame.sprite.collide_mask)
         blocks_hit_list = pygame.sprite.groupcollide(misils, cans, True, True, pygame.sprite.collide_mask)
+        blocks_hit_list = pygame.sprite.spritecollide(batmovile, fuel_cans, True, pygame.sprite.collide_mask)
 
 
     pygame.quit()
