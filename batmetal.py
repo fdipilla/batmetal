@@ -50,6 +50,9 @@ class Player(pygame.sprite.Sprite):
         if self.rect.y >= 135:
             self.rect = self.rect.move((0,-self.move))
 
+    def addFuelCan(self):
+        if self.fuel < 2500:
+            self.fuel += 500
 
 class Shoot(pygame.sprite.Sprite):
     def __init__(self, y, sprite):
@@ -319,6 +322,8 @@ def main():
         blocks_hit_list = pygame.sprite.groupcollide(shoots, cans, True, True, pygame.sprite.collide_mask)
         blocks_hit_list = pygame.sprite.groupcollide(misils, cans, True, True, pygame.sprite.collide_mask)
         blocks_hit_list = pygame.sprite.spritecollide(batmovile, fuel_cans, True, pygame.sprite.collide_mask)
+        if len(blocks_hit_list):
+            batmovile.addFuelCan()
 
 
     pygame.quit()
