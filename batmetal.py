@@ -274,7 +274,7 @@ def main():
             can = Can(can_sprite)
             cans.add(can)
 
-        random_number = random.randint(1, 100)
+        random_number = random.randint(1, 500)
         if len(fuel_cans) <= 0 and int(random_number) == 1:
             fuel_can = FuelCan(fuel_can_sprite)
             fuel_cans.add(fuel_can)
