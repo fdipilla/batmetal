@@ -38,6 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.lives = 3
         self.fuel = 3000
+        self.score = 0
 
     def update(self):
         return True
@@ -53,6 +54,9 @@ class Player(pygame.sprite.Sprite):
     def addFuelCan(self):
         if self.fuel < 2500:
             self.fuel += 500
+
+    def addPoint(self):
+        self.score += 1
 
 class Shoot(pygame.sprite.Sprite):
     def __init__(self, y, sprite):
@@ -320,7 +324,13 @@ def main():
 
 
         blocks_hit_list = pygame.sprite.groupcollide(shoots, cans, True, True, pygame.sprite.collide_mask)
+        if len(blocks_hit_list):
+            batmovile.addPoint()
+
         blocks_hit_list = pygame.sprite.groupcollide(misils, cans, True, True, pygame.sprite.collide_mask)
+        if len(blocks_hit_list):
+            batmovile.addPoint()
+
         blocks_hit_list = pygame.sprite.spritecollide(batmovile, fuel_cans, True, pygame.sprite.collide_mask)
         if len(blocks_hit_list):
             batmovile.addFuelCan()
