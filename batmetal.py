@@ -308,7 +308,7 @@ def main():
             fuel_can = FuelCan(fuel_can_sprite)
             fuel_cans.add(fuel_can)
 
-        random_number = random.randint(1, 10)
+        random_number = random.randint(1, 500)
         if len(lives) <= 0 and int(random_number) == 3:
             life = Life(life_sprite)
             lives.add(life)
