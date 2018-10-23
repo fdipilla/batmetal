@@ -127,6 +127,29 @@ class FuelCan(pygame.sprite.Sprite):
     def generate_random_y_position(self):
         return random.randint(3, 10) * 5 * 10
 
+class Life(pygame.sprite.Sprite):
+    def __init__(self, sprite):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = sprite
+        self.rect = sprite.get_rect()
+        screen = pygame.display.get_surface()
+        self.area = screen.get_rect()
+        # Maybe do not use magic numbers
+        self.rect.topleft = 800, self.generate_random_y_position()
+        self.move = 10
+        self.dizzy = 0
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def update(self):
+        self._move()
+
+    def _move(self):
+        newpos = self.rect.move((-self.move, 0))
+        self.rect = newpos
+
+    def generate_random_y_position(self):
+        return random.randint(3, 10) * 5 * 10
+
 
 class Misile(pygame.sprite.Sprite):
     def __init__(self, y, sprite):
@@ -221,6 +244,7 @@ def main():
     misile_sprite = pygame.image.load("misil.png").convert_alpha()
     can_sprite = pygame.image.load("can.png").convert_alpha()
     fuel_can_sprite = pygame.image.load("fuel_can.png").convert_alpha()
+    life_sprite = pygame.image.load("life.png").convert_alpha()
 
     bathead_1 = pygame.image.load("bathead_1.png").convert_alpha()
     bathead_2 = pygame.image.load("bathead_2.png").convert_alpha()
@@ -233,13 +257,14 @@ def main():
     fuel_4 = pygame.image.load("fuel_4.png").convert_alpha()
     fuel_5 = pygame.image.load("fuel_5.png").convert_alpha()
 
-    lives = [bathead_4, bathead_3, bathead_2, bathead_1]
+    lives_heads = [bathead_4, bathead_3, bathead_2, bathead_1]
     fuel_sprites = [fuel_1, fuel_2, fuel_3, fuel_4, fuel_5]
 
     shoots = pygame.sprite.Group()
     misils = pygame.sprite.Group()
     cans = pygame.sprite.Group()
     fuel_cans = pygame.sprite.Group()
+    lives = pygame.sprite.Group()
 
     #all_sprites_tuple = []
 
@@ -283,12 +308,18 @@ def main():
             fuel_can = FuelCan(fuel_can_sprite)
             fuel_cans.add(fuel_can)
 
+        random_number = random.randint(1, 10)
+        if len(lives) <= 0 and int(random_number) == 3:
+            life = Life(life_sprite)
+            lives.add(life)
+
 
         all_sprites_tuple.append(batmovile)
         all_sprites_tuple.append(cans)
         all_sprites_tuple.append(fuel_cans)
         all_sprites_tuple.append(misils)
         all_sprites_tuple.append(shoots)
+        all_sprites_tuple.append(lives)
 
 
         all_sprites_tuple = check_all_sprites_off_screen(all_sprites_tuple)
@@ -306,7 +337,7 @@ def main():
             draw_cannon_fire(cannon_fire, screen, batmovile.rect.y)
 
         draw_bottom_bar(screen, bottom_bar)
-        draw_bathead(screen, lives[batmovile.lives])
+        draw_bathead(screen, lives_heads[batmovile.lives])
         draw_fuel(screen, fuel_sprites, batmovile.fuel)
 
         pygame.display.flip()
