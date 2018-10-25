@@ -377,7 +377,7 @@ def main():
         if len(blocks_hit_list):
             batmovile.addFuelCan()
 
-        
+
 
 
     pygame.quit()
