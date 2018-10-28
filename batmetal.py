@@ -311,11 +311,15 @@ def main():
             can = Can(can_sprite)
             cans.add(can)
 
+        # 1/500 chances to generate a fuel can
+        # this method is actually prety bad
         random_number = random.randint(1, 500)
         if len(fuel_cans) <= 0 and int(random_number) == 1:
             fuel_can = FuelCan(fuel_can_sprite)
             fuel_cans.add(fuel_can)
 
+        # 1/500 chances to generate life
+        # this method is actually prety bad
         random_number = random.randint(1, 500)
         if len(lives) <= 0 and int(random_number) == 3:
             life = Life(life_sprite)
@@ -362,6 +366,7 @@ def main():
 
         if len(blocks_hit_list):
             batmovile.lives -= 1
+            # reset life, for development purposes
             if batmovile.lives < 0:
                 batmovile.lives = 3
 
