@@ -24,12 +24,13 @@ def load_image(name, colorkey=None):
         if colorkey is -1:
             colorkey = image.get_at((0,0))
         image.set_colorkey(colorkey, RLEACCEL)
-    return image, image.get_rect()
+    return image
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = load_image('batmovile.png', -1)
+        self.image = load_image('batmovile.png', -1)
+        self.rect = self.image.get_rect()
         self.rect.y = 200
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
@@ -243,26 +244,26 @@ def main():
     background_x = 0
     sky_x = 0
 
-    bridge = pygame.image.load(img_dir+"bridge.png").convert_alpha()
-    sky = pygame.image.load(img_dir+"sky.png").convert()
-    bottom_bar = pygame.image.load(img_dir+"bottom_bar.png").convert()
-    cannon_fire = pygame.image.load(img_dir+"cannon_fire.png").convert_alpha()
-    shoot_sprite = pygame.image.load(img_dir+"shoot.png").convert_alpha()
-    misile_sprite = pygame.image.load(img_dir+"misil.png").convert_alpha()
-    can_sprite = pygame.image.load(img_dir+"can.png").convert_alpha()
-    fuel_can_sprite = pygame.image.load(img_dir+"fuel_can.png").convert_alpha()
-    life_sprite = pygame.image.load(img_dir+"life.png").convert_alpha()
+    bridge = load_image('bridge.png', -1)
+    sky = load_image("sky.png")
+    bottom_bar = load_image("bottom_bar.png")
+    cannon_fire = load_image("cannon_fire.png", -1)
+    shoot_sprite = load_image("shoot.png", -1)
+    misile_sprite = load_image("misil.png", -1)
+    can_sprite = load_image("can.png", -1)
+    fuel_can_sprite = load_image("fuel_can.png", -1)
+    life_sprite = load_image("life.png", -1)
 
-    bathead_1 = pygame.image.load(img_dir+"bathead_1.png").convert_alpha()
-    bathead_2 = pygame.image.load(img_dir+"bathead_2.png").convert_alpha()
-    bathead_3 = pygame.image.load(img_dir+"bathead_3.png").convert_alpha()
-    bathead_4 = pygame.image.load(img_dir+"bathead_4.png").convert_alpha()
+    bathead_1 = load_image("bathead_1.png",-1)
+    bathead_2 = load_image("bathead_2.png",-1)
+    bathead_3 = load_image("bathead_3.png",-1)
+    bathead_4 = load_image("bathead_4.png",-1)
 
-    fuel_1 = pygame.image.load(img_dir+"fuel_1.png").convert_alpha()
-    fuel_2 = pygame.image.load(img_dir+"fuel_2.png").convert_alpha()
-    fuel_3 = pygame.image.load(img_dir+"fuel_3.png").convert_alpha()
-    fuel_4 = pygame.image.load(img_dir+"fuel_4.png").convert_alpha()
-    fuel_5 = pygame.image.load(img_dir+"fuel_5.png").convert_alpha()
+    fuel_1 = load_image("fuel_1.png",-1)
+    fuel_2 = load_image("fuel_2.png",-1)
+    fuel_3 = load_image("fuel_3.png",-1)
+    fuel_4 = load_image("fuel_4.png",-1)
+    fuel_5 = load_image("fuel_5.png",-1)
 
     lives_heads = [bathead_4, bathead_3, bathead_2, bathead_1]
     fuel_sprites = [fuel_1, fuel_2, fuel_3, fuel_4, fuel_5]
