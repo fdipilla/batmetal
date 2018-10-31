@@ -217,9 +217,18 @@ def draw_fuel(screen, sprites, fuel):
     screen.blit(sprite, (w - 505, h - sprite_h - 20))
 
 
-def draw_cannon_fire(fire, screen, y):
+def draw_cannon_fire(fire, screen, y, fire_sprite):
     # Maybe do not use magic numbers
-    screen.blit(fire, (340, y + 30))
+    if fire_sprite >= 20:
+        fire_sprite_number = 3
+    elif fire_sprite >= 10:
+        fire_sprite_number = 2
+    elif fire_sprite >= 5:
+        fire_sprite_number = 1
+    else:
+        fire_sprite_number = 0
+
+    screen.blit(fire[fire_sprite_number], (340, y))
 
 # Check if the given array of sprites is off the screen
 # and removeit from the array
@@ -243,11 +252,16 @@ def main():
 
     background_x = 0
     sky_x = 0
+    cannon_fire_tick = 26
 
     bridge = load_image('bridge.png', -1)
     sky = load_image("sky.png")
     bottom_bar = load_image("bottom_bar.png")
-    cannon_fire = load_image("cannon_fire.png", -1)
+    cannon_fire_0 = load_image("shoot_0.png", -1)
+    cannon_fire_1 = load_image("shoot_1.png", -1)
+    cannon_fire_2 = load_image("shoot_2.png", -1)
+    cannon_fire_3 = load_image("shoot_3.png", -1)
+    cannon_fire = [cannon_fire_0, cannon_fire_1, cannon_fire_2, cannon_fire_3]
     shoot_sprite = load_image("shoot.png", -1)
     misile_sprite = load_image("misil.png", -1)
     can_sprite = load_image("can.png", -1)
@@ -303,6 +317,7 @@ def main():
             batmovile.move_up()
         if k[K_SPACE]:
             must_draw_cannon_fire = True
+            cannon_fire_tick = 0
 
         # 1/20 chances to generate a can and only two cans on the screen
         # this method is actually prety bad
@@ -346,7 +361,12 @@ def main():
         allsprites.draw(screen)
 
         if must_draw_cannon_fire:
-            draw_cannon_fire(cannon_fire, screen, batmovile.rect.y)
+            draw_cannon_fire(cannon_fire, screen, batmovile.rect.y, cannon_fire_tick)
+
+        if cannon_fire_tick <= 25:
+            draw_cannon_fire(cannon_fire, screen, batmovile.rect.y, cannon_fire_tick)
+            cannon_fire_tick += 1
+
 
         draw_bottom_bar(screen, bottom_bar)
         draw_bathead(screen, lives_heads[batmovile.lives])
