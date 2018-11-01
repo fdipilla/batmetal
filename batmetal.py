@@ -67,7 +67,7 @@ class Player(pygame.sprite.Sprite):
         return 3
 
 class Shoot(pygame.sprite.Sprite):
-    def __init__(self, y, sprite):
+    def __init__(self, y, sprite, animation_sprites):
         pygame.sprite.Sprite.__init__(self)
         self.image = sprite
         self.rect = sprite.get_rect()
@@ -78,12 +78,33 @@ class Shoot(pygame.sprite.Sprite):
         self.move = 15
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
+        self.animation_tick = 0
+        self.animation_sprites = animation_sprites
+        self.y = y
 
     def update(self):
         self._move()
         screen = pygame.display.get_surface()
+        if self.animation_tick <= 25:
+            self.animate()
         if not screen.get_rect().contains(self.rect):
             self.kill()
+
+    def animate(self):
+        # Maybe do not use magic numbers
+        screen = pygame.display.get_surface()
+        fire_sprite = self.animation_tick
+        if fire_sprite >= 20:
+            fire_sprite_number = 3
+        elif fire_sprite >= 10:
+            fire_sprite_number = 2
+        elif fire_sprite >= 5:
+            fire_sprite_number = 1
+        else:
+            fire_sprite_number = 0
+
+        screen.blit(self.animation_sprites[fire_sprite_number], (340, self.y))
+        self.animation_tick += 1
 
     def _move(self):
         newpos = self.rect.move((self.move, 0))
@@ -252,7 +273,6 @@ def main():
 
     background_x = 0
     sky_x = 0
-    cannon_fire_tick = 26
 
     bridge = load_image('bridge.png', -1)
     sky = load_image("sky.png")
@@ -294,7 +314,6 @@ def main():
     while going:
         all_sprites_tuple = []
         clock.tick(60)
-        must_draw_cannon_fire = False
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -302,7 +321,7 @@ def main():
             elif event.type == KEYDOWN and event.key == K_ESCAPE:
                 going = False
             elif event.type == KEYDOWN and event.key == K_SPACE:
-                shoot = Shoot(batmovile.rect.y, shoot_sprite)
+                shoot = Shoot(batmovile.rect.y, shoot_sprite, cannon_fire)
                 shoots.add(shoot)
             elif event.type == KEYDOWN and event.key == K_a:
                 misil = Misile(batmovile.rect.y, misile_sprite)
@@ -315,9 +334,6 @@ def main():
             batmovile.move_down()
         elif k[K_UP]:
             batmovile.move_up()
-        if k[K_SPACE]:
-            must_draw_cannon_fire = True
-            cannon_fire_tick = 0
 
         # 1/20 chances to generate a can and only two cans on the screen
         # this method is actually prety bad
@@ -359,14 +375,6 @@ def main():
         allsprites.update()
 
         allsprites.draw(screen)
-
-        if must_draw_cannon_fire:
-            draw_cannon_fire(cannon_fire, screen, batmovile.rect.y, cannon_fire_tick)
-
-        if cannon_fire_tick <= 25:
-            draw_cannon_fire(cannon_fire, screen, batmovile.rect.y, cannon_fire_tick)
-            cannon_fire_tick += 1
-
 
         draw_bottom_bar(screen, bottom_bar)
         draw_bathead(screen, lives_heads[batmovile.lives])
