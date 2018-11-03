@@ -181,20 +181,28 @@ class Life(pygame.sprite.Sprite):
 
 
 class Misile(pygame.sprite.Sprite):
-    def __init__(self, y, sprite):
+    def __init__(self, y, sprite, sprites):
         pygame.sprite.Sprite.__init__(self)
-        self.image = sprite
+        self.image = sprites[0]
         self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         # Maybe do not use magic numbers
-        self.rect.topleft = 300, y + 40
+        self.rect.topleft = 300, y
         self.move = 15
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
+        self.launching = True
+        self.animation_tick = 0
+        self.animation_sprites = sprites
+        self.y = y
 
     def update(self):
-        self._move()
+        if not self.launching:
+            self._move()
+        else:
+            self.animate()
+
         screen = pygame.display.get_surface()
         if not screen.get_rect().contains(self.rect):
             self.kill()
@@ -202,6 +210,34 @@ class Misile(pygame.sprite.Sprite):
     def _move(self):
         newpos = self.rect.move((self.move, 0))
         self.rect = newpos
+        self.animation_tick += 1
+        if self.animation_tick >= 10:
+            self.image = self.animation_sprites[5]
+            self.animation_tick = 0
+        else:
+            self.image = self.animation_sprites[4]
+
+
+    def animate(self):
+        screen = pygame.display.get_surface()
+        tick = self.animation_tick
+        if tick >= 40:
+            sprite = 5
+            self.launching = False
+        if tick >= 30:
+            sprite = 4
+        if tick >= 20:
+            sprite = 3
+        elif tick >= 10:
+            sprite = 2
+        elif tick >= 5:
+            sprite = 1
+        else:
+            sprite = 0
+
+        self.image = self.animation_sprites[sprite]
+        self.rect.topleft = 300, self.y - 50
+        self.animation_tick += 1
 
 def draw_background(x, bridge, screen):
     rel_x = x % bridge.get_rect().width
@@ -282,6 +318,15 @@ def main():
     cannon_fire_2 = load_image("shoot_2.png", -1)
     cannon_fire_3 = load_image("shoot_3.png", -1)
     cannon_fire = [cannon_fire_0, cannon_fire_1, cannon_fire_2, cannon_fire_3]
+
+    misil_0 = load_image("misil_0_0.png", -1)
+    misil_1 = load_image("misil_1_0.png", -1)
+    misil_2 = load_image("misil_2_0.png", -1)
+    misil_3 = load_image("misil_3_0.png", -1)
+    misil_4 = load_image("misil_4_0.png", -1)
+    misil_5 = load_image("misil_5_0.png", -1)
+    misile_animation = [misil_0, misil_1, misil_2, misil_3, misil_4, misil_5]
+
     shoot_sprite = load_image("shoot.png", -1)
     misile_sprite = load_image("misil.png", -1)
     can_sprite = load_image("can.png", -1)
@@ -324,7 +369,7 @@ def main():
                 shoot = Shoot(batmovile.rect.y, shoot_sprite, cannon_fire)
                 shoots.add(shoot)
             elif event.type == KEYDOWN and event.key == K_a:
-                misil = Misile(batmovile.rect.y, misile_sprite)
+                misil = Misile(batmovile.rect.y, misile_sprite, misile_animation)
                 misils.add(misil)
 
 
