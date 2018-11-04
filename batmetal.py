@@ -319,12 +319,12 @@ def main():
     cannon_fire_3 = load_image("shoot_3.png", -1)
     cannon_fire = [cannon_fire_0, cannon_fire_1, cannon_fire_2, cannon_fire_3]
 
-    misil_0 = load_image("misil_0_0.png", -1)
-    misil_1 = load_image("misil_1_0.png", -1)
-    misil_2 = load_image("misil_2_0.png", -1)
-    misil_3 = load_image("misil_3_0.png", -1)
-    misil_4 = load_image("misil_4_0.png", -1)
-    misil_5 = load_image("misil_5_0.png", -1)
+    misil_0 = load_image("misil_0.png", -1)
+    misil_1 = load_image("misil_1.png", -1)
+    misil_2 = load_image("misil_2.png", -1)
+    misil_3 = load_image("misil_3.png", -1)
+    misil_4 = load_image("misil_4.png", -1)
+    misil_5 = load_image("misil_5.png", -1)
     misile_animation = [misil_0, misil_1, misil_2, misil_3, misil_4, misil_5]
 
     shoot_sprite = load_image("shoot.png", -1)
