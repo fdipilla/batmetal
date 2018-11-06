@@ -9,7 +9,6 @@ if not pygame.mixer: print ('Warning, sound disabled')
 
 main_dir = os.path.split(os.path.abspath(__file__))[0]
 
-# despues meter las imagenes en una carpeta separada
 img_dir = os.path.join(main_dir, 'sprites')
 
 def load_image(name, colorkey=None):
