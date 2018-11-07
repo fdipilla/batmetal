@@ -352,8 +352,6 @@ def main():
     fuel_cans = pygame.sprite.Group()
     lives = pygame.sprite.Group()
 
-    #all_sprites_tuple = []
-
     going = True
     while going:
         all_sprites_tuple = []
