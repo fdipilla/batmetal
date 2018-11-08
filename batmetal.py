@@ -366,8 +366,9 @@ def main():
                 shoot = Shoot(batmovile.rect.y, shoot_sprite, cannon_fire)
                 shoots.add(shoot)
             elif event.type == KEYDOWN and event.key == K_a:
-                misil = Misile(batmovile.rect.y, misile_sprite, misile_animation)
-                misils.add(misil)
+                if batmovile.score >= 10:
+                    misil = Misile(batmovile.rect.y, misile_sprite, misile_animation)
+                    misils.add(misil)
 
 
         k = pygame.key.get_pressed()
