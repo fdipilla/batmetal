@@ -130,7 +130,7 @@ class Can(pygame.sprite.Sprite):
         self.rect = newpos
 
     def generate_random_y_position(self):
-        return random.randint(3, 10) * 5 * 10
+        return random.randint(3, 8) * 5 * 10
 
 class FuelCan(pygame.sprite.Sprite):
     def __init__(self, sprite):
@@ -153,7 +153,7 @@ class FuelCan(pygame.sprite.Sprite):
         self.rect = newpos
 
     def generate_random_y_position(self):
-        return random.randint(3, 10) * 5 * 10
+        return random.randint(3, 8) * 5 * 10
 
 class Life(pygame.sprite.Sprite):
     def __init__(self, sprite):
@@ -176,7 +176,7 @@ class Life(pygame.sprite.Sprite):
         self.rect = newpos
 
     def generate_random_y_position(self):
-        return random.randint(3, 10) * 5 * 10
+        return random.randint(3, 8) * 5 * 10
 
 
 class Misile(pygame.sprite.Sprite):
