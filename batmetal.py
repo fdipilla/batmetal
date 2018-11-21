@@ -238,6 +238,61 @@ class Misile(pygame.sprite.Sprite):
         self.rect.topleft = 300, self.y - 50
         self.animation_tick += 1
 
+class Test(pygame.sprite.Sprite):
+    def __init__(self, y, spritesheet):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = sprites[0]
+        self.rect = sprite.get_rect()
+        screen = pygame.display.get_surface()
+        self.area = screen.get_rect()
+        # Maybe do not use magic numbers
+        self.rect.topleft = 300, y
+        self.move = 15
+        self.dizzy = 0
+        self.mask = pygame.mask.from_surface(self.image)
+        self.animation_tick = 0
+        self.spritesheet = spritesheet
+        self.y = y
+
+    def update(self):
+        self.animate()
+
+        screen = pygame.display.get_surface()
+        if not screen.get_rect().contains(self.rect):
+            self.kill()
+
+    def _move(self):
+        newpos = self.rect.move((self.move, 0))
+        self.rect = newpos
+        self.animation_tick += 1
+        if self.animation_tick >= 10:
+            self.image = self.animation_sprites[5]
+            self.animation_tick = 0
+        else:
+            self.image = self.animation_sprites[4]
+
+
+    def animate(self):
+        screen = pygame.display.get_surface()
+        tick = self.animation_tick
+        if tick >= 40:
+            sprite = 5
+            self.launching = False
+        if tick >= 30:
+            sprite = 4
+        if tick >= 20:
+            sprite = 3
+        elif tick >= 10:
+            sprite = 2
+        elif tick >= 5:
+            sprite = 1
+        else:
+            sprite = 0
+
+        self.image = self.animation_sprites[sprite]
+        self.rect.topleft = 300, self.y - 50
+        self.animation_tick += 1
+
 class Shock(pygame.sprite.Sprite):
     def __init__(self, y, sprite, sprites):
         pygame.sprite.Sprite.__init__(self)
@@ -403,6 +458,8 @@ def main():
     fuel_4 = load_image("fuel_4.png",-1)
     fuel_5 = load_image("fuel_5.png",-1)
 
+    test = load_image("test.png",-1)
+
     lives_heads = [bathead_4, bathead_3, bathead_2, bathead_1]
     fuel_sprites = [fuel_1, fuel_2, fuel_3, fuel_4, fuel_5]
 
@@ -433,6 +490,9 @@ def main():
             elif event.type == KEYDOWN and event.key == K_s:
                 new_sock = Shock(batmovile.rect.y, misile_sprite, shock_animation)
                 shock.add(new_sock)
+            elif event.type == KEYDOWN and event.key == K_d:
+                new_sock = Test(batmovile.rect.y, test)
+                misils.add(new_sockn)
 
 
         k = pygame.key.get_pressed()
