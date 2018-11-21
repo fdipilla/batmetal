@@ -289,7 +289,7 @@ class Test(pygame.sprite.Sprite):
             sprite = 1
         else:
             sprite = 0
-            
+
         self.image = self.spritesheet.get_image(0,145 * sprite,145,75)
         #self.image = self.animation_sprites[sprite]
         self.rect.topleft = 300, self.y - 50
@@ -298,12 +298,12 @@ class Test(pygame.sprite.Sprite):
 class SpriteSheet(object):
     def __init__(self, image):
         self.sprite_sheet = image
- 
- 
+
+
     def get_image(self, x, y, width, height):
         image = pygame.Surface([width, height]).convert()
- 
-        image.blit(self.sprite_sheet, (0, 0), (x, y, width, height)) 
+
+        image.blit(self.sprite_sheet, (0, 0), (x, y, width, height))
         image.set_colorkey(image.get_at((0,0)), RLEACCEL)
 
         return image
