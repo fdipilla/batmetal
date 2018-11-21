@@ -254,6 +254,8 @@ class Test(pygame.sprite.Sprite):
         self.animation_tick = 0
         self.spritesheet = spritesheet
         self.y = y
+        self.sprite_h = 75
+        self.sprite_w = 145
 
     def update(self):
         self.animate()
@@ -290,7 +292,7 @@ class Test(pygame.sprite.Sprite):
         else:
             sprite = 0
 
-        self.image = self.spritesheet.get_image(0,145 * sprite,145,75)
+        self.image = self.spritesheet.get_image(0,self.sprite_h * sprite,self.sprite_w,self.sprite_h)
         #self.image = self.animation_sprites[sprite]
         self.rect.topleft = 300, self.y - 50
         self.animation_tick += 1
