@@ -241,8 +241,9 @@ class Misile(pygame.sprite.Sprite):
 class Test(pygame.sprite.Sprite):
     def __init__(self, y, spritesheet):
         pygame.sprite.Sprite.__init__(self)
-        self.image = sprites[0]
-        self.rect = sprite.get_rect()
+        self.image = spritesheet.get_image(0,0,145,75)
+        self.spritesheet = spritesheet
+        self.rect = self.image.get_rect()
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         # Maybe do not use magic numbers
@@ -288,10 +289,24 @@ class Test(pygame.sprite.Sprite):
             sprite = 1
         else:
             sprite = 0
-
-        self.image = self.animation_sprites[sprite]
+            
+        self.image = self.spritesheet.get_image(0,145 * sprite,145,75)
+        #self.image = self.animation_sprites[sprite]
         self.rect.topleft = 300, self.y - 50
         self.animation_tick += 1
+
+class SpriteSheet(object):
+    def __init__(self, image):
+        self.sprite_sheet = image
+ 
+ 
+    def get_image(self, x, y, width, height):
+        image = pygame.Surface([width, height]).convert()
+ 
+        image.blit(self.sprite_sheet, (0, 0), (x, y, width, height)) 
+        image.set_colorkey(image.get_at((0,0)), RLEACCEL)
+
+        return image
 
 class Shock(pygame.sprite.Sprite):
     def __init__(self, y, sprite, sprites):
@@ -491,8 +506,9 @@ def main():
                 new_sock = Shock(batmovile.rect.y, misile_sprite, shock_animation)
                 shock.add(new_sock)
             elif event.type == KEYDOWN and event.key == K_d:
-                new_sock = Test(batmovile.rect.y, test)
-                misils.add(new_sockn)
+                sprite_sheet = SpriteSheet(test)
+                new_sock = Test(batmovile.rect.y, sprite_sheet)
+                misils.add(new_sock)
 
 
         k = pygame.key.get_pressed()
