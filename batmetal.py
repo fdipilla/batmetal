@@ -252,27 +252,35 @@ class Test(pygame.sprite.Sprite):
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_tick = 0
+        self.launching = True
         self.spritesheet = spritesheet
         self.y = y
         self.sprite_h = 75
         self.sprite_w = 145
 
     def update(self):
-        self.animate()
-
+        
+        if not self.launching:
+            self._move()
+        else:
+            self.animate()
+            
         screen = pygame.display.get_surface()
         if not screen.get_rect().contains(self.rect):
             self.kill()
 
-    def _move(self):
+    def _move(self):        
         newpos = self.rect.move((self.move, 0))
         self.rect = newpos
         self.animation_tick += 1
+        
         if self.animation_tick >= 10:
-            self.image = self.animation_sprites[5]
+            sprite = 5
+            self.image = self.spritesheet.get_image(0,self.sprite_h * sprite,self.sprite_w,self.sprite_h)
             self.animation_tick = 0
         else:
-            self.image = self.animation_sprites[4]
+            sprite = 4
+            self.image = self.spritesheet.get_image(0,self.sprite_h * sprite,self.sprite_w,self.sprite_h)
 
 
     def animate(self):
