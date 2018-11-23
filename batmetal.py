@@ -259,21 +259,21 @@ class Test(pygame.sprite.Sprite):
         self.sprite_w = 145
 
     def update(self):
-        
+
         if not self.launching:
             self._move()
         else:
             self.animate()
-            
+
         screen = pygame.display.get_surface()
         if not screen.get_rect().contains(self.rect):
             self.kill()
 
-    def _move(self):        
+    def _move(self):
         newpos = self.rect.move((self.move, 0))
         self.rect = newpos
         self.animation_tick += 1
-        
+
         if self.animation_tick >= 10:
             sprite = 5
             self.image = self.spritesheet.get_image(0,self.sprite_h * sprite,self.sprite_w,self.sprite_h)
