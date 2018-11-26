@@ -243,7 +243,6 @@ class Misile(pygame.sprite.Sprite):
             sprite = 0
 
         self.image = self.spritesheet.get_image(0,self.sprite_h * sprite,self.sprite_w,self.sprite_h)
-        #self.image = self.animation_sprites[sprite]
         self.rect.topleft = 300, self.y - 50
         self.animation_tick += 1
 
