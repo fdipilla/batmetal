@@ -260,7 +260,7 @@ class Shock(pygame.sprite.Sprite):
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_tick = 0
-    
+
         self.spritesheet = spritesheet
         self.y = y
         self.sprite_h = 221
@@ -270,13 +270,13 @@ class Shock(pygame.sprite.Sprite):
         screen = pygame.display.get_surface()
         if self.animation_tick >= 23:
             self.kill()
-            
+
         self.animate()
 
     def animate(self):
         screen = pygame.display.get_surface()
         tick = self.animation_tick
-        
+
         self.image = self.spritesheet.get_image(0,self.sprite_h * tick,self.sprite_w,self.sprite_h)
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.topleft = 300, self.y - 50
@@ -441,7 +441,7 @@ def main():
 
     shock_sprite_image = load_image("shock_spritesheet.png",-1)
     shock_sprite_sheet = SpriteSheet(shock_sprite_image)
-    
+
     shoot_sprite = load_image("shoot.png", -1)
     misile_sprite = load_image("misil.png", -1)
     can_sprite = load_image("can.png", -1)
