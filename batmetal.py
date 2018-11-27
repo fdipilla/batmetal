@@ -246,6 +246,42 @@ class Misile(pygame.sprite.Sprite):
         self.rect.topleft = 300, self.y - 50
         self.animation_tick += 1
 
+class Shock(pygame.sprite.Sprite):
+    def __init__(self, y, spritesheet):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = spritesheet.get_image(0,0,952,221)
+        self.spritesheet = spritesheet
+        self.rect = self.image.get_rect()
+        screen = pygame.display.get_surface()
+        self.area = screen.get_rect()
+        # Maybe do not use magic numbers
+        self.rect.topleft = 300, y
+        self.move = 15
+        self.dizzy = 0
+        self.mask = pygame.mask.from_surface(self.image)
+        self.animation_tick = 0
+    
+        self.spritesheet = spritesheet
+        self.y = y
+        self.sprite_h = 221
+        self.sprite_w = 952
+
+    def update(self):
+        screen = pygame.display.get_surface()
+        if self.animation_tick >= 23:
+            self.kill()
+            
+        self.animate()
+
+    def animate(self):
+        screen = pygame.display.get_surface()
+        tick = self.animation_tick
+        
+        self.image = self.spritesheet.get_image(0,self.sprite_h * tick,self.sprite_w,self.sprite_h)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.topleft = 300, self.y - 50
+        self.animation_tick += 1
+
 class SpriteSheet(object):
     def __init__(self, image):
         self.sprite_sheet = image
@@ -259,7 +295,7 @@ class SpriteSheet(object):
 
         return image
 
-class Shock(pygame.sprite.Sprite):
+class ShockOld(pygame.sprite.Sprite):
     def __init__(self, y, sprite, sprites):
         pygame.sprite.Sprite.__init__(self)
         self.image = sprites[0]
@@ -403,6 +439,9 @@ def main():
 
     shock_animation = [shock_1, shock_2, shock_3, shock_4, shock_5, shock_6, shock_7, shock_8, shock_9, shock_10, shock_11, shock_12, shock_13, shock_14, shock_15, shock_16, shock_17, shock_18, shock_19, shock_20, shock_21, shock_22, shock_23]
 
+    shock_sprite_image = load_image("shock_spritesheet.png",-1)
+    shock_sprite_sheet = SpriteSheet(shock_sprite_image)
+    
     shoot_sprite = load_image("shoot.png", -1)
     misile_sprite = load_image("misil.png", -1)
     can_sprite = load_image("can.png", -1)
@@ -448,7 +487,7 @@ def main():
                     misil = Misile(batmovile.rect.y, misile_sprite_sheet)
                     misils.add(misil)
             elif event.type == KEYDOWN and event.key == K_s:
-                new_sock = Shock(batmovile.rect.y, misile_sprite, shock_animation)
+                new_sock = Shock(batmovile.rect.y, shock_sprite_sheet)
                 shock.add(new_sock)
 
 
