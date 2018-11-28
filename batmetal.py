@@ -295,40 +295,6 @@ class SpriteSheet(object):
 
         return image
 
-class ShockOld(pygame.sprite.Sprite):
-    def __init__(self, y, sprite, sprites):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = sprites[0]
-        self.rect = sprite.get_rect()
-        screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
-        # Maybe do not use magic numbers
-        self.rect.topleft = 300, y
-        self.move = 15
-        self.dizzy = 0
-        self.mask = pygame.mask.from_surface(self.image)
-        self.animation_tick = 0
-        self.animation_sprites = sprites
-        self.y = y
-
-    def update(self):
-        self.animate()
-
-        screen = pygame.display.get_surface()
-        if self.animation_tick >= 23:
-            self.kill()
-
-    def animate(self):
-        screen = pygame.display.get_surface()
-        sprite = self.animation_tick
-        if sprite >= 23:
-            sprite = 22
-
-        self.image = self.animation_sprites[sprite]
-        self.mask = pygame.mask.from_surface(self.image)
-        self.rect.topleft = 300, self.y - 50
-        self.animation_tick += 1
-
 def draw_background(x, bridge, screen):
     rel_x = x % bridge.get_rect().width
     screen.blit(bridge, (rel_x - bridge.get_rect().width, 0))
