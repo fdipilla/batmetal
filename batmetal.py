@@ -378,33 +378,6 @@ def main():
     misile_sprite_image = load_image("misile_animation.png",-1)
     misile_sprite_sheet = SpriteSheet(misile_sprite_image)
 
-
-    shock_1 = load_image("shock_1.png", -1)
-    shock_2 = load_image("shock_2.png", -1)
-    shock_3 = load_image("shock_3.png", -1)
-    shock_4 = load_image("shock_4.png", -1)
-    shock_5 = load_image("shock_5.png", -1)
-    shock_6 = load_image("shock_6.png", -1)
-    shock_7 = load_image("shock_7.png", -1)
-    shock_8 = load_image("shock_8.png", -1)
-    shock_9 = load_image("shock_9.png", -1)
-    shock_10 = load_image("shock_10.png", -1)
-    shock_11 = load_image("shock_11.png", -1)
-    shock_12 = load_image("shock_12.png", -1)
-    shock_13 = load_image("shock_13.png", -1)
-    shock_14 = load_image("shock_14.png", -1)
-    shock_15 = load_image("shock_15.png", -1)
-    shock_16 = load_image("shock_16.png", -1)
-    shock_17 = load_image("shock_17.png", -1)
-    shock_18 = load_image("shock_18.png", -1)
-    shock_19 = load_image("shock_19.png", -1)
-    shock_20 = load_image("shock_20.png", -1)
-    shock_21 = load_image("shock_21.png", -1)
-    shock_22 = load_image("shock_22.png", -1)
-    shock_23 = load_image("shock_23.png", -1)
-
-    shock_animation = [shock_1, shock_2, shock_3, shock_4, shock_5, shock_6, shock_7, shock_8, shock_9, shock_10, shock_11, shock_12, shock_13, shock_14, shock_15, shock_16, shock_17, shock_18, shock_19, shock_20, shock_21, shock_22, shock_23]
-
     shock_sprite_image = load_image("shock_spritesheet.png",-1)
     shock_sprite_sheet = SpriteSheet(shock_sprite_image)
 
