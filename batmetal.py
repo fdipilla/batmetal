@@ -426,8 +426,9 @@ def main():
                     misil = Misile(batmovile.rect.y, misile_sprite_sheet)
                     misils.add(misil)
             elif event.type == KEYDOWN and event.key == K_s:
-                new_sock = Shock(batmovile.rect.y, shock_sprite_sheet)
-                shock.add(new_sock)
+                if len(shock) == 0:
+                    new_sock = Shock(batmovile.rect.y, shock_sprite_sheet)
+                    shock.add(new_sock)
 
 
         k = pygame.key.get_pressed()
