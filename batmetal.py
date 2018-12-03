@@ -312,22 +312,26 @@ def draw_bathead(screen, bathead):
     sprite_w, sprite_h = bathead.get_size()
     screen.blit(bathead, (w - 410, h - sprite_h - 10))
 
-def draw_fuel(screen, sprites, fuel):
+def draw_fuel(screen, spritesheet, fuel):
     w, h = pygame.display.get_surface().get_size()
-
+    sprite_h = 30
+    sprite_w = 58
+    
     if fuel >= 2500:
-        sprite = sprites[0]
+        sprite = 4
     elif fuel >= 2000:
-        sprite = sprites[1]
+        sprite = 3
     elif fuel >= 1500:
-        sprite = sprites[2]
+        sprite = 2
     elif fuel >= 1000:
-        sprite = sprites[3]
+        sprite = 1
     else:
-        sprite = sprites[4]
+        sprite = 0
 
-    sprite_w, sprite_h = sprite.get_size()
-    screen.blit(sprite, (w - 505, h - sprite_h - 20))
+    #sprite_w, sprite_h = sprite.get_size()
+    image = spritesheet.get_image(0,sprite_h * sprite,sprite_w,sprite_h)
+    
+    screen.blit(image, (w - 505, h - sprite_h - 20))
 
 
 def draw_cannon_fire(fire, screen, y, fire_sprite):
@@ -399,7 +403,8 @@ def main():
     fuel_5 = load_image("fuel_5.png",-1)
 
     lives_heads = [bathead_4, bathead_3, bathead_2, bathead_1]
-    fuel_sprites = [fuel_1, fuel_2, fuel_3, fuel_4, fuel_5]
+    fuel_sprites_image = load_image("fuel_spritesheet.png")
+    fuel_sprites = SpriteSheet(fuel_sprites_image)
 
     shoots = pygame.sprite.Group()
     misils = pygame.sprite.Group()
