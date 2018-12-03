@@ -316,7 +316,7 @@ def draw_fuel(screen, spritesheet, fuel):
     w, h = pygame.display.get_surface().get_size()
     sprite_h = 30
     sprite_w = 58
-    
+
     if fuel >= 2500:
         sprite = 4
     elif fuel >= 2000:
@@ -328,9 +328,8 @@ def draw_fuel(screen, spritesheet, fuel):
     else:
         sprite = 0
 
-    #sprite_w, sprite_h = sprite.get_size()
     image = spritesheet.get_image(0,sprite_h * sprite,sprite_w,sprite_h)
-    
+
     screen.blit(image, (w - 505, h - sprite_h - 20))
 
 
