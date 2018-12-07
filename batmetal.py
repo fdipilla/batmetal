@@ -395,12 +395,6 @@ def main():
     bathead_3 = load_image("bathead_3.png",-1)
     bathead_4 = load_image("bathead_4.png",-1)
 
-    fuel_1 = load_image("fuel_1.png",-1)
-    fuel_2 = load_image("fuel_2.png",-1)
-    fuel_3 = load_image("fuel_3.png",-1)
-    fuel_4 = load_image("fuel_4.png",-1)
-    fuel_5 = load_image("fuel_5.png",-1)
-
     lives_heads = [bathead_4, bathead_3, bathead_2, bathead_1]
     fuel_sprites_image = load_image("fuel_spritesheet.png")
     fuel_sprites = SpriteSheet(fuel_sprites_image)
