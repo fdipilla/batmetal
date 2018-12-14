@@ -282,6 +282,44 @@ class Shock(pygame.sprite.Sprite):
         self.rect.topleft = 300, self.y - 50
         self.animation_tick += 1
 
+class Batarang(pygame.sprite.Sprite):
+    def __init__(self, y, spritesheet):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprite_h = 344
+        self.sprite_w = 1138
+        self.image = spritesheet.get_image(0,0,self.sprite_w,self.sprite_h)
+        self.spritesheet = spritesheet
+        self.rect = self.image.get_rect()
+        screen = pygame.display.get_surface()
+        self.area = screen.get_rect()
+        # Maybe do not use magic numbers
+        self.rect.topleft = 200, y
+        self.move = 15
+        self.dizzy = 0
+        self.mask = pygame.mask.from_surface(self.image)
+        self.animation_tick = 0
+
+        self.spritesheet = spritesheet
+        self.y = y
+
+
+    def update(self):
+        screen = pygame.display.get_surface()
+        print self.animation_tick
+        if self.animation_tick >= 17:
+            self.kill()
+
+        self.animate()
+
+    def animate(self):
+        screen = pygame.display.get_surface()
+        tick = self.animation_tick
+
+        self.image = self.spritesheet.get_image(0,self.sprite_h * tick,self.sprite_w,self.sprite_h)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.topleft = 50, self.y - 200
+        self.animation_tick += 1
+
 class SpriteSheet(object):
     def __init__(self, image):
         self.sprite_sheet = image
@@ -383,6 +421,9 @@ def main():
 
     shock_sprite_image = load_image("shock_spritesheet.png",-1)
     shock_sprite_sheet = SpriteSheet(shock_sprite_image)
+    
+    batarang_sprite_image = load_image("bata_spritesheet.png",-1)
+    batarang_sprite_sheet = SpriteSheet(batarang_sprite_image)
 
     shoot_sprite = load_image("shoot.png", -1)
     misile_sprite = load_image("misil.png", -1)
@@ -402,6 +443,7 @@ def main():
     shoots = pygame.sprite.Group()
     misils = pygame.sprite.Group()
     shock = pygame.sprite.Group()
+    batarang = pygame.sprite.Group()
     cans = pygame.sprite.Group()
     fuel_cans = pygame.sprite.Group()
     lives = pygame.sprite.Group()
@@ -427,6 +469,10 @@ def main():
                 if len(shock) == 0:
                     new_sock = Shock(batmovile.rect.y, shock_sprite_sheet)
                     shock.add(new_sock)
+            elif event.type == KEYDOWN and event.key == K_d:
+                if len(batarang) == 0:
+                    new_batarang = Batarang(batmovile.rect.y, batarang_sprite_sheet)
+                    batarang.add(new_batarang)
 
 
         k = pygame.key.get_pressed()
@@ -464,6 +510,7 @@ def main():
         all_sprites_tuple.append(misils)
         all_sprites_tuple.append(shoots)
         all_sprites_tuple.append(shock)
+        all_sprites_tuple.append(batarang)
         all_sprites_tuple.append(lives)
 
 
