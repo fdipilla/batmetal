@@ -249,7 +249,9 @@ class Misile(pygame.sprite.Sprite):
 class Shock(pygame.sprite.Sprite):
     def __init__(self, y, spritesheet):
         pygame.sprite.Sprite.__init__(self)
-        self.image = spritesheet.get_image(0,0,952,221)
+        self.sprite_h = 221
+        self.sprite_w = 952
+        self.image = spritesheet.get_image(0,0,self.sprite_w,self.sprite_h)
         self.spritesheet = spritesheet
         self.rect = self.image.get_rect()
         screen = pygame.display.get_surface()
@@ -260,11 +262,9 @@ class Shock(pygame.sprite.Sprite):
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_tick = 0
-
         self.spritesheet = spritesheet
         self.y = y
-        self.sprite_h = 221
-        self.sprite_w = 952
+
 
     def update(self):
         screen = pygame.display.get_surface()
@@ -305,7 +305,6 @@ class Batarang(pygame.sprite.Sprite):
 
     def update(self):
         screen = pygame.display.get_surface()
-        print self.animation_tick
         if self.animation_tick >= 17:
             self.kill()
 
@@ -421,7 +420,7 @@ def main():
 
     shock_sprite_image = load_image("shock_spritesheet.png",-1)
     shock_sprite_sheet = SpriteSheet(shock_sprite_image)
-    
+
     batarang_sprite_image = load_image("bata_spritesheet.png",-1)
     batarang_sprite_sheet = SpriteSheet(batarang_sprite_image)
 
