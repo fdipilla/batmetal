@@ -298,7 +298,6 @@ class Batarang(pygame.sprite.Sprite):
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_tick = 0
-
         self.spritesheet = spritesheet
         self.y = y
 
@@ -395,10 +394,12 @@ def check_all_sprites_off_screen(sprites_groups):
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
+    game_w = 1200
+    game_h = 600
+    screen = pygame.display.set_mode((game_w, game_h))
     pygame.display.set_caption('batmetal')
     pygame.mouse.set_visible(0)
-
+    pygame.display.toggle_fullscreen()
     clock = pygame.time.Clock()
 
     batmovile = Player()
@@ -407,7 +408,7 @@ def main():
     sky_x = 0
 
     bridge = load_image('bridge.png', -1)
-    sky = load_image("sky.png")
+    sky = load_image("sky2.png")
     bottom_bar = load_image("bottom_bar.png")
     cannon_fire_0 = load_image("shoot_0.png", -1)
     cannon_fire_1 = load_image("shoot_1.png", -1)
