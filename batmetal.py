@@ -110,14 +110,13 @@ class Shoot(pygame.sprite.Sprite):
         self.rect = newpos
 
 class Can(pygame.sprite.Sprite):
-    def __init__(self, sprite):
+    def __init__(self, sprite, game_w):
         pygame.sprite.Sprite.__init__(self)
         self.image = sprite
         self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
-        # Maybe do not use magic numbers
-        self.rect.topleft = 800, self.generate_random_y_position()
+        self.rect.topleft = game_w + 10 , self.generate_random_y_position()
         self.move = 10
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
@@ -384,11 +383,12 @@ def draw_cannon_fire(fire, screen, y, fire_sprite):
 
 # Check if the given array of sprites is off the screen
 # and removeit from the array
-def check_all_sprites_off_screen(sprites_groups):
+def check_all_sprites_off_screen(sprites_groups, game_w):
+    max_w = game_w + 100
     for sprites_group in sprites_groups:
         if not isinstance(sprites_group, Player):
             for sprite in sprites_group:
-                if sprite.rect.x <= -100 or sprite.rect.x >= 900:
+                if sprite.rect.x <= -100 or sprite.rect.x >= max_w:
                     sprites_group.remove(sprite)
     return sprites_groups
 
@@ -399,7 +399,7 @@ def main():
     screen = pygame.display.set_mode((game_w, game_h))
     pygame.display.set_caption('batmetal')
     pygame.mouse.set_visible(0)
-    pygame.display.toggle_fullscreen()
+    #pygame.display.toggle_fullscreen()
     clock = pygame.time.Clock()
 
     batmovile = Player()
@@ -408,7 +408,7 @@ def main():
     sky_x = 0
 
     bridge = load_image('bridge.png', -1)
-    sky = load_image("sky2.png")
+    sky = load_image("sky.png")
     bottom_bar = load_image("bottom_bar.png")
     cannon_fire_0 = load_image("shoot_0.png", -1)
     cannon_fire_1 = load_image("shoot_1.png", -1)
@@ -486,7 +486,7 @@ def main():
         # this method is actually prety bad
         random_number = random.randint(1, 20)
         if len(cans) <= 1 and int(random_number) == 1:
-            can = Can(can_sprite)
+            can = Can(can_sprite, game_w)
             cans.add(can)
 
         # 1/500 chances to generate a fuel can
@@ -514,7 +514,7 @@ def main():
         all_sprites_tuple.append(lives)
 
 
-        all_sprites_tuple = check_all_sprites_off_screen(all_sprites_tuple)
+        all_sprites_tuple = check_all_sprites_off_screen(all_sprites_tuple, game_w)
 
         allsprites = pygame.sprite.RenderPlain(all_sprites_tuple)
 
