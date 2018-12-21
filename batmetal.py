@@ -155,14 +155,14 @@ class FuelCan(pygame.sprite.Sprite):
         return random.randint(3, 8) * 5 * 10
 
 class Life(pygame.sprite.Sprite):
-    def __init__(self, sprite):
+    def __init__(self, sprite, game_w):
         pygame.sprite.Sprite.__init__(self)
         self.image = sprite
         self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         # Maybe do not use magic numbers
-        self.rect.topleft = 800, self.generate_random_y_position()
+        self.rect.topleft = game_w + 10, self.generate_random_y_position()
         self.move = 10
         self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
@@ -500,7 +500,7 @@ def main():
         # this method is actually prety bad
         random_number = random.randint(1, 500)
         if len(lives) <= 0 and int(random_number) == 3:
-            life = Life(life_sprite)
+            life = Life(life_sprite, game_w)
             lives.add(life)
 
 
