@@ -531,7 +531,7 @@ def main():
 
         pygame.display.flip()
 
-        background_x -= 5
+        background_x -= 10
         sky_x -= 1
         batmovile.fuel -= 1
 
