@@ -34,7 +34,6 @@ class Player(pygame.sprite.Sprite):
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         self.move = 9
-        self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.lives = self.startingLife()
         self.fuel = 3000
@@ -75,7 +74,6 @@ class Shoot(pygame.sprite.Sprite):
         # Maybe do not use magic numbers
         self.rect.topleft = 300, y + 40
         self.move = 15
-        self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_tick = 0
         self.animation_sprites = animation_sprites
@@ -117,7 +115,6 @@ class Can(pygame.sprite.Sprite):
         self.area = screen.get_rect()
         self.rect.topleft = game_w + 10 , self.generate_random_y_position()
         self.move = 10
-        self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
@@ -139,7 +136,6 @@ class FuelCan(pygame.sprite.Sprite):
         self.area = screen.get_rect()
         self.rect.topleft = game_w + 10, self.generate_random_y_position()
         self.move = 10
-        self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
@@ -161,7 +157,6 @@ class Life(pygame.sprite.Sprite):
         self.area = screen.get_rect()
         self.rect.topleft = game_w + 10, self.generate_random_y_position()
         self.move = 10
-        self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
@@ -187,7 +182,6 @@ class Misile(pygame.sprite.Sprite):
         # Maybe do not use magic numbers
         self.rect.topleft = 300, y
         self.move = 15
-        self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_tick = 0
         self.launching = True
@@ -255,7 +249,6 @@ class Shock(pygame.sprite.Sprite):
         # Maybe do not use magic numbers
         self.rect.topleft = 300, y
         self.move = 15
-        self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_tick = 0
         self.spritesheet = spritesheet
@@ -291,7 +284,6 @@ class Batarang(pygame.sprite.Sprite):
         # Maybe do not use magic numbers
         self.rect.topleft = 200, y
         self.move = 15
-        self.dizzy = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_tick = 0
         self.spritesheet = spritesheet
