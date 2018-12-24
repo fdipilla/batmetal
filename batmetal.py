@@ -90,7 +90,6 @@ class Shoot(pygame.sprite.Sprite):
             self.kill()
 
     def animate(self):
-        # Maybe do not use magic numbers
         screen = pygame.display.get_surface()
         fire_sprite = self.animation_tick
         if fire_sprite >= 20:
@@ -138,7 +137,6 @@ class FuelCan(pygame.sprite.Sprite):
         self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
-        # Maybe do not use magic numbers
         self.rect.topleft = game_w + 10, self.generate_random_y_position()
         self.move = 10
         self.dizzy = 0
@@ -161,7 +159,6 @@ class Life(pygame.sprite.Sprite):
         self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
-        # Maybe do not use magic numbers
         self.rect.topleft = game_w + 10, self.generate_random_y_position()
         self.move = 10
         self.dizzy = 0
