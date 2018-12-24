@@ -336,6 +336,7 @@ def draw_background(x, bridge, screen):
 
 def draw_bottom_bar(screen, bar):
     w, h = pygame.display.get_surface().get_size()
+    bar = pygame.transform.scale(bar, (w, 92))
     bar_w, bar_h = bar.get_size()
     screen.blit(bar, (w - bar_w, h - bar_h))
 
