@@ -32,7 +32,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.y = 200
         screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
         self.move = 9
         self.mask = pygame.mask.from_surface(self.image)
         self.lives = self.startingLife()
@@ -70,7 +69,6 @@ class Shoot(pygame.sprite.Sprite):
         self.image = sprite
         self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
         # Maybe do not use magic numbers
         self.rect.topleft = 300, y + 40
         self.move = 15
@@ -112,7 +110,6 @@ class Can(pygame.sprite.Sprite):
         self.image = sprite
         self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
         self.rect.topleft = game_w + 10 , self.generate_random_y_position()
         self.move = 10
         self.mask = pygame.mask.from_surface(self.image)
@@ -133,7 +130,6 @@ class FuelCan(pygame.sprite.Sprite):
         self.image = sprite
         self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
         self.rect.topleft = game_w + 10, self.generate_random_y_position()
         self.move = 10
         self.mask = pygame.mask.from_surface(self.image)
@@ -154,7 +150,6 @@ class Life(pygame.sprite.Sprite):
         self.image = sprite
         self.rect = sprite.get_rect()
         screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
         self.rect.topleft = game_w + 10, self.generate_random_y_position()
         self.move = 10
         self.mask = pygame.mask.from_surface(self.image)
@@ -178,7 +173,6 @@ class Misile(pygame.sprite.Sprite):
         self.spritesheet = spritesheet
         self.rect = self.image.get_rect()
         screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
         # Maybe do not use magic numbers
         self.rect.topleft = 300, y
         self.move = 15
@@ -245,7 +239,6 @@ class Shock(pygame.sprite.Sprite):
         self.spritesheet = spritesheet
         self.rect = self.image.get_rect()
         screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
         # Maybe do not use magic numbers
         self.rect.topleft = 300, y
         self.move = 15
@@ -280,7 +273,6 @@ class Batarang(pygame.sprite.Sprite):
         self.spritesheet = spritesheet
         self.rect = self.image.get_rect()
         screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
         # Maybe do not use magic numbers
         self.rect.topleft = 200, y
         self.move = 15
