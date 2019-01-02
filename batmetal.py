@@ -347,7 +347,8 @@ def draw_fuel(screen, spritesheet, fuel):
 
     image = spritesheet.get_image(0,sprite_h * sprite,sprite_w,sprite_h)
 
-    screen.blit(image, (w - 505, h - sprite_h - 20))
+    w_displacement = ((38 * w) / 100)
+    screen.blit(image, (w_displacement, h - sprite_h - 20))
 
 
 def draw_cannon_fire(fire, screen, y, fire_sprite):
@@ -417,7 +418,7 @@ def main():
     bathead_2 = load_image("bathead_2.png",-1)
     bathead_3 = load_image("bathead_3.png",-1)
     bathead_4 = load_image("bathead_4.png",-1)
-
+    
     lives_heads = [bathead_4, bathead_3, bathead_2, bathead_1]
     fuel_sprites_image = load_image("fuel_spritesheet.png")
     fuel_sprites = SpriteSheet(fuel_sprites_image)
