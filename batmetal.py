@@ -326,8 +326,9 @@ def draw_bottom_bar(screen, bar):
 
 def draw_bathead(screen, bathead):
     w, h = pygame.display.get_surface().get_size()
+    w_displacement = ((48.5*w) / 100)
     sprite_w, sprite_h = bathead.get_size()
-    screen.blit(bathead, (w - 410, h - sprite_h - 10))
+    screen.blit(bathead, (w_displacement, h - sprite_h - 10))
 
 def draw_fuel(screen, spritesheet, fuel):
     w, h = pygame.display.get_surface().get_size()
