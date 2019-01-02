@@ -324,11 +324,12 @@ def draw_bottom_bar(screen, bar):
     bar_w, bar_h = bar.get_size()
     screen.blit(bar, (w - bar_w, h - bar_h))
 
-def draw_bathead(screen, bathead):
+def draw_bathead(screen, bathead, lives):
     w, h = pygame.display.get_surface().get_size()
     w_displacement = ((48.5*w) / 100)
-    sprite_w, sprite_h = bathead.get_size()
-    screen.blit(bathead, (w_displacement, h - sprite_h - 10))
+    sprite_w, sprite_h = (55, 52)
+    image = bathead.get_image(0,sprite_h * lives,sprite_w,sprite_h)
+    screen.blit(image, (w_displacement, h - sprite_h - 10))
 
 def draw_fuel(screen, spritesheet, fuel):
     w, h = pygame.display.get_surface().get_size()
@@ -419,6 +420,8 @@ def main():
     bathead_2 = load_image("bathead_2.png",-1)
     bathead_3 = load_image("bathead_3.png",-1)
     bathead_4 = load_image("bathead_4.png",-1)
+    bathead_sprite_image = load_image("bathead_spritesheet.png",-1)
+    bathead_sprite_sheet = SpriteSheet(bathead_sprite_image)
     
     lives_heads = [bathead_4, bathead_3, bathead_2, bathead_1]
     fuel_sprites_image = load_image("fuel_spritesheet.png")
@@ -510,7 +513,7 @@ def main():
         allsprites.draw(screen)
 
         draw_bottom_bar(screen, bottom_bar)
-        draw_bathead(screen, lives_heads[batmovile.lives])
+        draw_bathead(screen, bathead_sprite_sheet, batmovile.lives)
         draw_fuel(screen, fuel_sprites, batmovile.fuel)
 
         pygame.display.flip()
