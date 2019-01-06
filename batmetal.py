@@ -411,7 +411,6 @@ def main():
     batarang_sprite_sheet = SpriteSheet(batarang_sprite_image)
 
     shoot_sprite = load_image("shoot.png", -1)
-    misile_sprite = load_image("misil.png", -1)
     can_sprite = load_image("can.png", -1)
     fuel_can_sprite = load_image("fuel_can.png", -1)
     life_sprite = load_image("life.png", -1)
