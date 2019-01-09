@@ -394,7 +394,7 @@ def main():
 
     bridge = load_image('bridge.png', -1)
     sky = load_image("sky.png")
-    bottom_bar = load_image("bottom_bar.png")
+    bottom_bar = load_image("bottom_bar2.png")
     cannon_fire_0 = load_image("shoot_0.png", -1)
     cannon_fire_1 = load_image("shoot_1.png", -1)
     cannon_fire_2 = load_image("shoot_2.png", -1)
