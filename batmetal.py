@@ -384,7 +384,7 @@ def main():
     screen = pygame.display.set_mode((game_w, game_h))
     pygame.display.set_caption('batmetal')
     pygame.mouse.set_visible(0)
-    #pygame.display.toggle_fullscreen()
+    pygame.display.toggle_fullscreen()
     clock = pygame.time.Clock()
 
     batmovile = Player()
