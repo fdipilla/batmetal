@@ -379,8 +379,8 @@ def check_all_sprites_off_screen(sprites_groups, game_w):
 
 def main():
     pygame.init()
-    game_w = 1200
-    game_h = 600
+    game_w = 1280
+    game_h = 576
     screen = pygame.display.set_mode((game_w, game_h))
     pygame.display.set_caption('batmetal')
     pygame.mouse.set_visible(0)
