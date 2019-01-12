@@ -320,7 +320,7 @@ def draw_background(x, bridge, screen):
 
 def draw_bottom_bar(screen, bar):
     w, h = pygame.display.get_surface().get_size()
-    bar = pygame.transform.scale(bar, (w, 92))
+    #bar = pygame.transform.scale(bar, (w, 92))
     bar_w, bar_h = bar.get_size()
     screen.blit(bar, (w - bar_w, h - bar_h))
 
@@ -394,7 +394,7 @@ def main():
 
     bridge = load_image('bridge.png', -1)
     sky = load_image("sky.png")
-    bottom_bar = load_image("bottom_bar2.png")
+    bottom_bar = load_image("bottom_bar.png")
     cannon_fire_0 = load_image("shoot_0.png", -1)
     cannon_fire_1 = load_image("shoot_1.png", -1)
     cannon_fire_2 = load_image("shoot_2.png", -1)
