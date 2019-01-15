@@ -350,7 +350,7 @@ def draw_fuel(screen, spritesheet, fuel):
     image = spritesheet.get_image(0,sprite_h * sprite,sprite_w,sprite_h)
 
     w_displacement = ((38 * w) / 100)
-    screen.blit(image, (w_displacement, h - sprite_h - 20))
+    screen.blit(image, (w_displacement, h - sprite_h - 35))
 
 
 def draw_cannon_fire(fire, screen, y, fire_sprite):
@@ -384,7 +384,7 @@ def main():
     screen = pygame.display.set_mode((game_w, game_h))
     pygame.display.set_caption('batmetal')
     pygame.mouse.set_visible(0)
-    pygame.display.toggle_fullscreen()
+    #pygame.display.toggle_fullscreen()
     clock = pygame.time.Clock()
 
     batmovile = Player()
@@ -417,7 +417,7 @@ def main():
 
     bathead_sprite_image = load_image("bathead_spritesheet.png",-1)
     bathead_sprite_sheet = SpriteSheet(bathead_sprite_image)
-    
+
     fuel_sprites_image = load_image("fuel_spritesheet.png")
     fuel_sprites = SpriteSheet(fuel_sprites_image)
 
