@@ -326,10 +326,10 @@ def draw_bottom_bar(screen, bar):
 
 def draw_bathead(screen, bathead, lives):
     w, h = pygame.display.get_surface().get_size()
-    w_displacement = ((48.5*w) / 100)
-    sprite_w, sprite_h = (55, 52)
+    w_displacement = ((48.6*w) / 100)
+    sprite_w, sprite_h = (90, 71)
     image = bathead.get_image(0,sprite_h * lives,sprite_w,sprite_h)
-    screen.blit(image, (w_displacement, h - sprite_h - 10))
+    screen.blit(image, (w_displacement, h - sprite_h - 15))
 
 def draw_fuel(screen, spritesheet, fuel):
     w, h = pygame.display.get_surface().get_size()
@@ -415,7 +415,7 @@ def main():
     fuel_can_sprite = load_image("fuel_can.png", -1)
     life_sprite = load_image("life.png", -1)
 
-    bathead_sprite_image = load_image("bathead_spritesheet.png",-1)
+    bathead_sprite_image = load_image("bathead_spritesheet.png",None)
     bathead_sprite_sheet = SpriteSheet(bathead_sprite_image)
 
     fuel_sprites_image = load_image("fuel_spritesheet.png")
