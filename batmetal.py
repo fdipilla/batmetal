@@ -324,6 +324,12 @@ def draw_bottom_bar(screen, bar):
     bar_w, bar_h = bar.get_size()
     screen.blit(bar, (w - bar_w, h - bar_h))
 
+def draw_misile_indicator(screen, sprite):
+    w, h = pygame.display.get_surface().get_size()
+    #bar = pygame.transform.scale(bar, (w, 92))
+    sprite_w, sprite_h = sprite.get_size()
+    screen.blit(sprite, (w - sprite_w, h - sprite_h))    
+
 def draw_bathead(screen, bathead, lives):
     w, h = pygame.display.get_surface().get_size()
     w_displacement = ((48.6*w) / 100)
