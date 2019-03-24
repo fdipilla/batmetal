@@ -324,11 +324,13 @@ def draw_bottom_bar(screen, bar):
     bar_w, bar_h = bar.get_size()
     screen.blit(bar, (w - bar_w, h - bar_h))
 
-def draw_misile_indicator(screen, sprite):
+def draw_shoot_indicator(screen, sprite):
     w, h = pygame.display.get_surface().get_size()
-    #bar = pygame.transform.scale(bar, (w, 92))
-    sprite_w, sprite_h = sprite.get_size()
-    screen.blit(sprite, (w - sprite_w, h - sprite_h))    
+    # displace 69% from left to right
+    w_displacement = ((69*w) / 100)
+    # displace 13% from bottom to top
+    h_displacement = h - ((13*h) / 100)
+    screen.blit(sprite, (w_displacement, h_displacement))
 
 def draw_bathead(screen, bathead, lives):
     w, h = pygame.display.get_surface().get_size()
@@ -401,6 +403,7 @@ def main():
     bridge = load_image('bridge.png', -1)
     sky = load_image("sky.png")
     bottom_bar = load_image("bottom_bar.png")
+    shoot_indicator = load_image("shoot_indicator.png", -1)
     cannon_fire_0 = load_image("shoot_0.png", -1)
     cannon_fire_1 = load_image("shoot_1.png", -1)
     cannon_fire_2 = load_image("shoot_2.png", -1)
@@ -515,7 +518,7 @@ def main():
         draw_bottom_bar(screen, bottom_bar)
         draw_bathead(screen, bathead_sprite_sheet, batmovile.lives)
         draw_fuel(screen, fuel_sprites, batmovile.fuel)
-
+        draw_shoot_indicator(screen, shoot_indicator)
         pygame.display.flip()
 
         background_x -= 10
