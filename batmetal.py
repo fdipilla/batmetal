@@ -331,6 +331,14 @@ def draw_shoot_indicator(screen, sprite):
     # displace 13% from bottom to top
     h_displacement = h - ((13*h) / 100)
     screen.blit(sprite, (w_displacement, h_displacement))
+
+def draw_batarang_indicator(screen, sprite):
+    w, h = pygame.display.get_surface().get_size()
+    # displace 74.6% from left to right
+    w_displacement = ((74.6*w) / 100)
+    # displace 13% from bottom to top
+    h_displacement = h - ((13*h) / 100)
+    screen.blit(sprite, (w_displacement, h_displacement))
     
 
 def draw_misile_indicator(screen, sprite):
@@ -415,6 +423,7 @@ def main():
     shoot_indicator = load_image("shoot_indicator.png", -1)
 
     misile_indicator_sprite = load_image("misile_indicator.png", -1)
+    batarang_indicator_sprite = load_image("batarang_indicator.png", -1)
     
     cannon_fire_0 = load_image("shoot_0.png", -1)
     cannon_fire_1 = load_image("shoot_1.png", -1)
@@ -535,6 +544,12 @@ def main():
 
         if batmovile.score >= 10:
             draw_misile_indicator(screen, misile_indicator_sprite)
+
+        #if batmovile.score >= 20:
+        #draw_misile_indicator(screen, misile_indicator_sprite)
+
+        if batmovile.score >= 30:
+            draw_batarang_indicator(screen, batarang_indicator_sprite)
             
         pygame.display.flip()
 
