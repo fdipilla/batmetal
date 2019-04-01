@@ -63,6 +63,15 @@ class Player(pygame.sprite.Sprite):
     def startingLife(self):
         return 3
 
+    def canShootMisile(self):
+        return self.score >= 10
+
+    def canShootShocks(self):
+        return self.score >= 20
+
+    def canShootBatarang(self):
+        return self.score >= 30
+
 class Shoot(pygame.sprite.Sprite):
     def __init__(self, y, sprite, animation_sprites):
         pygame.sprite.Sprite.__init__(self)
@@ -483,7 +492,7 @@ def main():
                 shoot = Shoot(batmovile.rect.y, shoot_sprite, cannon_fire)
                 shoots.add(shoot)
             elif event.type == KEYDOWN and event.key == K_a:
-                if batmovile.score >= 10:
+                if batmovile.canShootMisile():
                     misil = Misile(batmovile.rect.y, misile_sprite_sheet)
                     misils.add(misil)
             elif event.type == KEYDOWN and event.key == K_s:
@@ -551,13 +560,13 @@ def main():
         draw_fuel(screen, fuel_sprites, batmovile.fuel)
         draw_shoot_indicator(screen, shoot_indicator)
 
-        if batmovile.score >= 10:
+        if batmovile.canShootMisile():
             draw_misile_indicator(screen, misile_indicator_sprite)
 
-        if batmovile.score >= 20:
+        if batmovile.canShootShocks():
             draw_shock_indicator(screen, shock_indicator_sprite)
 
-        if batmovile.score >= 30:
+        if batmovile.canShootBatarang():
             draw_batarang_indicator(screen, batarang_indicator_sprite)
             
         pygame.display.flip()
