@@ -599,7 +599,7 @@ def main():
         blocks_hit_list = pygame.sprite.groupcollide(shock, cans, False, True, pygame.sprite.collide_mask)
         if len(blocks_hit_list):
             batmovile.addPoint()
-        
+
         blocks_hit_list = pygame.sprite.groupcollide(batarang, cans, False, True, pygame.sprite.collide_mask)
         if len(blocks_hit_list):
             batmovile.addPoint()
