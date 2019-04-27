@@ -307,6 +307,40 @@ class Batarang(pygame.sprite.Sprite):
         self.rect.topleft = 50, self.y - 200
         self.animation_tick += 1
 
+class Robin(pygame.sprite.Sprite):
+    def __init__(self, y, spritesheet):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprite_h = 344
+        self.sprite_w = 1138
+        self.image = spritesheet.get_image(0,0,self.sprite_w,self.sprite_h)
+        self.spritesheet = spritesheet
+        self.rect = self.image.get_rect()
+        screen = pygame.display.get_surface()
+        # Maybe do not use magic numbers
+        self.rect.topleft = 200, y
+        self.move = 15
+        self.mask = pygame.mask.from_surface(self.image)
+        self.animation_tick = 0
+        self.spritesheet = spritesheet
+        self.y = y
+
+
+    def update(self):
+        screen = pygame.display.get_surface()
+        if self.animation_tick >= 17:
+            self.kill()
+
+        self.animate()
+
+    def animate(self):
+        screen = pygame.display.get_surface()
+        tick = self.animation_tick
+
+        self.image = self.spritesheet.get_image(0,self.sprite_h * tick,self.sprite_w,self.sprite_h)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.topleft = 50, self.y - 200
+        self.animation_tick += 1
+
 class SpriteSheet(object):
     def __init__(self, image):
         self.sprite_sheet = image
